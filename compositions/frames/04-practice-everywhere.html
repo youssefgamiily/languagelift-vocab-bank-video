@@ -1,0 +1,444 @@
+<template data-composition-id="04-practice-everywhere" data-width="1920" data-height="1080" data-duration="18.337">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&family=Source+Sans+Pro:wght@400;600;700&family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+
+    .f4-root {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      background: #F3F3F2;
+      overflow: hidden;
+      font-family: 'Source Sans Pro', sans-serif;
+      color: #1C1917;
+    }
+
+    .f4-sun-bloom {
+      position: absolute;
+      top: -100px;
+      left: 10%;
+      width: 900px;
+      height: 900px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(245, 155, 10, 0.08) 50%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .f4-header-tag {
+      position: absolute;
+      top: 50px;
+      left: 100px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #57534E;
+    }
+
+    .f4-tag-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #B45309;
+    }
+
+    .f4-layout {
+      position: absolute;
+      top: 110px;
+      left: 100px;
+      right: 100px;
+      bottom: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    /* Card A: Writing Lab Console */
+    .f4-lab-card {
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(28, 25, 23, 0.08);
+      padding: 30px;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .f4-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #F3F4F6;
+      padding-bottom: 14px;
+    }
+
+    .f4-header-badge {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #B45309;
+    }
+
+    .f4-mode-title {
+      font-family: 'Source Serif Pro', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #1C1917;
+      margin-top: 4px;
+    }
+
+    /* Words to Include Pills */
+    .f4-words-section {
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .f4-words-title {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #57534E;
+      margin-bottom: 10px;
+      letter-spacing: 0.08em;
+    }
+
+    .f4-pills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .f4-vocab-pill {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: #FFFFFF;
+      border: 1px solid #D1D5DB;
+      color: #374151;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .f4-vocab-pill.active {
+      background: #ECFDF5;
+      border-color: #10B981;
+      color: #065F46;
+    }
+
+    /* Writing Input Area */
+    .f4-textarea-box {
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 18px;
+      min-height: 140px;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      color: #1C1917;
+    }
+
+    .f4-highlight-word {
+      background: #FEF3C7;
+      color: #92400E;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* Diagnostic Card */
+    .f4-diag-card {
+      background: #F0FDF4;
+      border: 1px solid #86EFAC;
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 13px;
+      color: #065F46;
+    }
+
+    /* Card B: Speaking Lab & Closed Loop Booster */
+    .f4-speaking-card {
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(28, 25, 23, 0.08);
+      padding: 30px;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .f4-tutor-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .f4-avatar-img {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: 2px solid #E5E7EB;
+      object-fit: cover;
+    }
+
+    /* Live Acoustic Waveform */
+    .f4-waveform-box {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .f4-wave-bars {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      height: 44px;
+    }
+
+    .f4-bar {
+      width: 5px;
+      background: #B45309;
+      border-radius: 3px;
+      height: 8px;
+    }
+
+    .f4-transcript-line {
+      font-style: italic;
+      color: #1E293B;
+      font-size: 15px;
+      text-align: center;
+    }
+
+    /* Boost Matrix */
+    .f4-boost-matrix {
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      border-radius: 14px;
+      padding: 16px 20px;
+    }
+
+    .f4-boost-header {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: #065F46;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .f4-boost-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: #1C1917;
+    }
+
+    .f4-strength-pill {
+      font-weight: 700;
+      color: #065F46;
+    }
+
+    .f4-bottom-banner {
+      position: absolute;
+      bottom: 45px;
+      left: 100px;
+      right: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #E5E7EB;
+      padding-top: 18px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 14px;
+      color: #57534E;
+    }
+  </style>
+
+  <div id="frame-04" class="clip f4-root" data-start="0" data-duration="18.337" data-width="1920" data-height="1080" data-composition-id="04-practice-everywhere">
+    <div class="f4-sun-bloom" data-layout-allow-overflow></div>
+
+    <div class="f4-header-tag" data-layout-allow-overlap>
+      <span class="f4-tag-dot"></span>
+      <span>Part 04 / The Closed-Loop Practice Labs</span>
+    </div>
+
+    <div class="f4-layout">
+      <!-- Left Card: AI Writing Coach / Words to Include -->
+      <div class="f4-lab-card" id="f4-left-card">
+        <div>
+          <div class="f4-card-header">
+            <span class="f4-header-badge">AI Writing Coach</span>
+            <span style="font-family: 'Source Code Pro', monospace; font-size: 12px; color: #57534E;">B1 Production Lab</span>
+          </div>
+          <div class="f4-mode-title">Contextual Synthesis</div>
+        </div>
+
+        <!-- Words to Include From Knowledge Bank -->
+        <div class="f4-words-section">
+          <div class="f4-words-title">Words to Include (From Knowledge Bank)</div>
+          <div class="f4-pills-row">
+            <div class="f4-vocab-pill" id="f4-pill-1">
+              <span id="f4-check-1">○</span>
+              <span>die Hafermilch</span>
+            </div>
+            <div class="f4-vocab-pill" id="f4-pill-2">
+              <span id="f4-check-2">○</span>
+              <span>mit Karte zahlen</span>
+            </div>
+            <div class="f4-vocab-pill" id="f4-pill-3">
+              <span id="f4-check-3">○</span>
+              <span>der Cappuccino</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulated Typing Area -->
+        <div class="f4-textarea-box" id="f4-typing-box">
+          <span id="f4-typed-text">"Hallo! Ich hätte gern einen großen <span class="f4-highlight-word">Cappuccino</span> mit <span class="f4-highlight-word">Hafermilch</span>..."</span>
+        </div>
+
+        <!-- Real-Time Evaluation Badge -->
+        <div class="f4-diag-card" id="f4-diag-badge">
+          <span>✓</span>
+          <span>Target words detected · +2.2x Active Production Multiplier</span>
+        </div>
+      </div>
+
+      <!-- Right Card: AI Speaking Tutor / Real-time Memory Boost -->
+      <div class="f4-speaking-card" id="f4-right-card">
+        <div>
+          <div class="f4-card-header">
+            <span class="f4-header-badge" style="color: #065F46;">AI Speaking Tutor</span>
+            <span style="font-family: 'Source Code Pro', monospace; font-size: 12px; color: #57534E;">Gemini Live Voice</span>
+          </div>
+          <div class="f4-tutor-row" style="margin-top: 8px;">
+            <img src="assets/screenshots/klara.webp" alt="Tutor Klara" class="f4-avatar-img">
+            <div>
+              <div style="font-family: 'Source Serif Pro', serif; font-size: 20px; font-weight: 700; color: #1C1917;">Klara (Tutor)</div>
+              <div style="font-family: 'Source Code Pro', monospace; font-size: 12px; color: #57534E;">Active Roleplay: Berlin Café</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speech Waveform -->
+        <div class="f4-waveform-box" data-layout-allow-overflow>
+          <div class="f4-wave-bars" id="f4-wave-bars">
+            <div class="f4-bar"></div><div class="f4-bar"></div><div class="f4-bar"></div>
+            <div class="f4-bar"></div><div class="f4-bar"></div><div class="f4-bar"></div>
+            <div class="f4-bar"></div><div class="f4-bar"></div><div class="f4-bar"></div>
+            <div class="f4-bar"></div><div class="f4-bar"></div><div class="f4-bar"></div>
+          </div>
+          <div class="f4-transcript-line">"Kann ich hier gleich mit Karte zahlen?"</div>
+        </div>
+
+        <!-- Closed-Loop Memory Boost Matrix -->
+        <div class="f4-boost-matrix" id="f4-boost-card">
+          <div class="f4-boost-header">
+            <span>● Closed-Loop Memory Boost</span>
+            <span>+45 XP</span>
+          </div>
+
+          <div class="f4-boost-item">
+            <span>die Hafermilch</span>
+            <span class="f4-strength-pill" id="f4-boost-val-1">35% → 100% (Mastered)</span>
+          </div>
+
+          <div class="f4-boost-item">
+            <span>mit Karte zahlen</span>
+            <span class="f4-strength-pill" id="f4-boost-val-2">50% → 100% (Mastered)</span>
+          </div>
+
+          <div class="f4-boost-item">
+            <span>der Cappuccino</span>
+            <span class="f4-strength-pill" id="f4-boost-val-3">75% → 100% (Mastered)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="f4-bottom-banner" data-layout-allow-overlap>
+      <span>Speaking & Writing Closed-Loop Production</span>
+      <span>FSRS Spaced Repetition Auto-Feedback</span>
+    </div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    window.__timelines["04-practice-everywhere"] = gsap.timeline();
+    var tl04 = window.__timelines["04-practice-everywhere"];
+
+    // 0.2s - 0.8s: Both Lab Cards enter
+    tl04.fromTo("#f4-left-card", 
+      { opacity: 0, x: -50, scale: 0.96 }, 
+      { opacity: 1, x: 0, scale: 1.0, duration: 0.8, ease: "power3.out" }, 
+      0.2
+    );
+    tl04.fromTo("#f4-right-card", 
+      { opacity: 0, x: 50, scale: 0.96 }, 
+      { opacity: 1, x: 0, scale: 1.0, duration: 0.8, ease: "power3.out" }, 
+      0.4
+    );
+
+    // 2.0s - 7.0s: Writing Lab words activate
+    tl04.to("#f4-pill-3", { backgroundColor: "#ECFDF5", borderColor: "#10B981", color: "#065F46", duration: 0.4 }, 2.5);
+    tl04.set("#f4-check-3", { innerHTML: "✓" }, 2.5);
+
+    tl04.to("#f4-pill-1", { backgroundColor: "#ECFDF5", borderColor: "#10B981", color: "#065F46", duration: 0.4 }, 4.2);
+    tl04.set("#f4-check-1", { innerHTML: "✓" }, 4.2);
+
+    tl04.to("#f4-pill-2", { backgroundColor: "#ECFDF5", borderColor: "#10B981", color: "#065F46", duration: 0.4 }, 6.0);
+    tl04.set("#f4-check-2", { innerHTML: "✓" }, 6.0);
+
+    // 8.0s - 14.0s: Speaking Lab waveform surges
+    var bars = document.querySelectorAll("#f4-wave-bars .f4-bar");
+    bars.forEach(function (bar, idx) {
+      tl04.to(bar, {
+        height: 12 + (idx % 4) * 8,
+        duration: 0.25,
+        yoyo: true,
+        repeat: 18,
+        ease: "sine.inOut"
+      }, 8.0 + (idx * 0.04));
+    });
+
+    // 12.0s - 15.5s: Closed Loop Memory Boost Card triggers
+    tl04.fromTo("#f4-boost-card", 
+      { scale: 0.95, borderColor: "#A7F3D0" }, 
+      { scale: 1.03, borderColor: "#059669", boxShadow: "0 10px 30px rgba(5, 150, 105, 0.2)", duration: 0.6, yoyo: true, repeat: 1, ease: "power2.inOut" }, 
+      12.0
+    );
+
+    // Camera momentum
+    tl04.to("#f4-left-card", { scale: 1.02, y: -4, duration: 17, ease: "power1.out" }, 1.0);
+    tl04.to("#f4-right-card", { scale: 1.02, y: -4, duration: 17, ease: "power1.out" }, 1.0);
+  </script>
+</template>

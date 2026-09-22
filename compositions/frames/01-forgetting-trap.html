@@ -1,0 +1,392 @@
+<template data-composition-id="01-forgetting-trap" data-width="1920" data-height="1080" data-duration="12.177">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&family=Source+Sans+Pro:wght@400;600;700&family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+
+    .f1-root {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      background: #F3F3F2;
+      overflow: hidden;
+      font-family: 'Source Sans Pro', sans-serif;
+      color: #1C1917;
+    }
+
+    .f1-sun-bloom {
+      position: absolute;
+      top: -80px;
+      left: 15%;
+      width: 850px;
+      height: 850px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(239, 68, 68, 0.12) 0%, rgba(245, 155, 10, 0.08) 45%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .f1-header-tag {
+      position: absolute;
+      top: 50px;
+      left: 100px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #57534E;
+    }
+
+    .f1-tag-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #DC2626;
+    }
+
+    .f1-layout {
+      position: absolute;
+      top: 110px;
+      left: 100px;
+      right: 100px;
+      bottom: 80px;
+      display: grid;
+      grid-template-columns: 0.95fr 1.25fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .f1-left-text {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .f1-title {
+      font-family: 'Source Serif Pro', serif;
+      font-size: 60px;
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: #1C1917;
+    }
+
+    .f1-title span.accent {
+      color: #DC2626;
+      font-style: italic;
+    }
+
+    .f1-desc {
+      font-size: 20px;
+      color: #57534E;
+      line-height: 1.5;
+    }
+
+    .f1-metrics-grid {
+      display: flex;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .f1-metric-box {
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 14px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 12px rgba(28, 25, 23, 0.03);
+      min-width: 140px;
+    }
+
+    .f1-metric-num {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 28px;
+      font-weight: 700;
+      color: #DC2626;
+    }
+
+    .f1-metric-lbl {
+      font-size: 13px;
+      color: #57534E;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 4px;
+    }
+
+    /* Right Showcase: Interactive Ebbinghaus Memory Simulation */
+    .f1-graph-stage {
+      position: relative;
+      height: 580px;
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(28, 25, 23, 0.08);
+      padding: 36px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .f1-graph-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #F3F4F6;
+      padding-bottom: 16px;
+    }
+
+    .f1-graph-title {
+      font-family: 'Source Serif Pro', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #1C1917;
+    }
+
+    .f1-graph-legend {
+      display: flex;
+      gap: 20px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 13px;
+      color: #57534E;
+    }
+
+    .f1-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .f1-legend-line {
+      width: 18px;
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    .f1-legend-line.red { background: #DC2626; }
+    .f1-legend-line.amber { background: #D97706; }
+    .f1-legend-line.emerald { background: #059669; }
+
+    /* SVG Canvas */
+    .f1-svg-wrap {
+      position: relative;
+      width: 100%;
+      height: 380px;
+    }
+
+    .f1-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .f1-grid-line {
+      stroke: #F3F4F6;
+      stroke-width: 1.5;
+      stroke-dasharray: 4 4;
+    }
+
+    .f1-axis-text {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 12px;
+      fill: #78716C;
+    }
+
+    /* Floating callout badge */
+    .f1-callout-badge {
+      position: absolute;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+    }
+
+    .f1-badge-red {
+      top: 240px;
+      left: 280px;
+      background: #FEF2F2;
+      border: 1px solid #FCA5A5;
+      color: #991B1B;
+    }
+
+    .f1-badge-emerald {
+      top: 60px;
+      right: 40px;
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      color: #065F46;
+    }
+
+    .f1-bottom-banner {
+      position: absolute;
+      bottom: 45px;
+      left: 100px;
+      right: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #E5E7EB;
+      padding-top: 18px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 14px;
+      color: #57534E;
+    }
+  </style>
+
+  <div id="frame-01" class="clip f1-root" data-start="0" data-duration="12.177" data-width="1920" data-height="1080" data-composition-id="01-forgetting-trap">
+    <div class="f1-sun-bloom" data-layout-allow-overflow></div>
+
+    <div class="f1-header-tag" data-layout-allow-overlap>
+      <span class="f1-tag-dot"></span>
+      <span>Part 01 / Cognitive Science</span>
+    </div>
+
+    <div class="f1-layout">
+      <!-- Left Column: Copy & Stats -->
+      <div class="f1-left-text" id="f1-left">
+        <h1 class="f1-title" id="f1-heading">
+          Why 80% of Vocab<br>
+          <span class="accent">Silently Vanishes.</span>
+        </h1>
+
+        <p class="f1-desc" id="f1-desc">
+          Without spaced reinforcement, memory decays along an exponential forgetting curve. The human brain discards isolated words within 7 days.
+        </p>
+
+        <div class="f1-metrics-grid" id="f1-metrics">
+          <div class="f1-metric-box">
+            <div class="f1-metric-num" id="f1-stat-loss">80%</div>
+            <div class="f1-metric-lbl">Lost in 7 Days</div>
+          </div>
+          <div class="f1-metric-box">
+            <div class="f1-metric-num">Ebbinghaus</div>
+            <div class="f1-metric-lbl">Forgetting Law</div>
+          </div>
+          <div class="f1-metric-box">
+            <div class="f1-metric-num" style="color: #065F46;">94%</div>
+            <div class="f1-metric-lbl">With Knowledge Bank</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Forgetting Curve Visualization -->
+      <div class="f1-graph-stage" id="f1-graph">
+        <div class="f1-graph-header">
+          <div class="f1-graph-title">Ebbinghaus Retention Decay vs. FSRS Spacing</div>
+          <div class="f1-graph-legend">
+            <div class="f1-legend-item">
+              <span class="f1-legend-line red"></span>
+              <span>Without System</span>
+            </div>
+            <div class="f1-legend-item">
+              <span class="f1-legend-line emerald"></span>
+              <span>Knowledge Bank</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="f1-svg-wrap">
+          <svg class="f1-svg" viewBox="0 0 720 320">
+            <!-- Grid Lines -->
+            <line x1="60" y1="40" x2="680" y2="40" class="f1-grid-line" />
+            <line x1="60" y1="110" x2="680" y2="110" class="f1-grid-line" />
+            <line x1="60" y1="180" x2="680" y2="180" class="f1-grid-line" />
+            <line x1="60" y1="250" x2="680" y2="250" class="f1-grid-line" />
+
+            <!-- Axis Labels -->
+            <text x="25" y="44" class="f1-axis-text">100%</text>
+            <text x="32" y="114" class="f1-axis-text">75%</text>
+            <text x="32" y="184" class="f1-axis-text">50%</text>
+            <text x="32" y="254" class="f1-axis-text">20%</text>
+
+            <text x="70" y="295" class="f1-axis-text">Day 1</text>
+            <text x="220" y="295" class="f1-axis-text">Day 2</text>
+            <text x="370" y="295" class="f1-axis-text">Day 4</text>
+            <text x="520" y="295" class="f1-axis-text">Day 7</text>
+            <text x="640" y="295" class="f1-axis-text">Day 14</text>
+
+            <!-- Curve 1: The Harsh Forgetting Fall (Red Path) -->
+            <path
+              id="f1-decay-path"
+              d="M 70 40 Q 140 200, 300 240 T 670 265"
+              fill="none"
+              stroke="#DC2626"
+              stroke-width="4.5"
+              stroke-linecap="round"
+              stroke-dasharray="800"
+              stroke-dashoffset="800"
+            />
+
+            <!-- Curve 2: Knowledge Bank FSRS Spaced Repetition (Emerald Path) -->
+            <path
+              id="f1-srs-path"
+              d="M 70 40 Q 130 110, 180 125 Q 190 60, 240 50 Q 310 85, 360 90 Q 370 50, 420 46 Q 520 60, 670 54"
+              fill="none"
+              stroke="#059669"
+              stroke-width="5"
+              stroke-linecap="round"
+              stroke-dasharray="1000"
+              stroke-dashoffset="1000"
+            />
+          </svg>
+
+          <!-- Floating Badges -->
+          <div class="f1-callout-badge f1-badge-red" id="f1-badge-decay">
+            <span>⚠️</span> 80% Forgotten (Day 3)
+          </div>
+
+          <div class="f1-callout-badge f1-badge-emerald" id="f1-badge-srs">
+            <span>✨</span> 94% Retained (FSRS Stabilized)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="f1-bottom-banner" data-layout-allow-overlap>
+      <span>Ebbinghaus Cognitive Memory Model</span>
+      <span>Language Lift Active Knowledge Architecture</span>
+    </div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    window.__timelines["01-forgetting-trap"] = gsap.timeline();
+    var tl01 = window.__timelines["01-forgetting-trap"];
+
+    // 0.2s - 0.9s: Left copy & metrics cascade
+    tl01.fromTo("#f1-heading", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, 0.2);
+    tl01.fromTo("#f1-desc", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 0.5);
+    tl01.fromTo("#f1-metrics", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.8);
+
+    // 0.6s: Graph frame glides in
+    tl01.fromTo("#f1-graph", 
+      { opacity: 0, x: 50, scale: 0.96 }, 
+      { opacity: 1, x: 0, scale: 1.0, duration: 0.9, ease: "power3.out" }, 
+      0.6
+    );
+
+    // 1.4s - 4.5s: Red decay path plunges down (exponential decay)
+    tl01.to("#f1-decay-path", { strokeDashoffset: 0, duration: 2.8, ease: "power2.in" }, 1.4);
+    tl01.fromTo("#f1-badge-decay", 
+      { opacity: 0, scale: 0.8, y: 10 }, 
+      { opacity: 1, scale: 1.0, y: 0, duration: 0.4, ease: "back.out(1.5)" }, 
+      3.2
+    );
+
+    // 5.5s - 9.5s: Voice transitions to "What if your vocabulary could actually stick?" -> Emerald SRS curve surges
+    tl01.to("#f1-srs-path", { strokeDashoffset: 0, duration: 3.2, ease: "power2.out" }, 5.8);
+    tl01.fromTo("#f1-badge-srs", 
+      { opacity: 0, scale: 0.8, y: -10 }, 
+      { opacity: 1, scale: 1.0, y: 0, duration: 0.5, ease: "back.out(1.7)" }, 
+      8.5
+    );
+
+    // Subtle continuous camera momentum
+    tl01.to("#f1-graph", { scale: 1.02, y: -4, duration: 11, ease: "power1.out" }, 1.0);
+  </script>
+</template>

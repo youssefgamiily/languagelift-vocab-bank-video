@@ -1,0 +1,538 @@
+<template data-composition-id="02-discover-capture" data-width="1920" data-height="1080" data-duration="17.580">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&family=Source+Sans+Pro:wght@400;600;700&family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+
+    .f2-root {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      background: #F3F3F2;
+      overflow: hidden;
+      font-family: 'Source Sans Pro', sans-serif;
+      color: #1C1917;
+    }
+
+    .f2-sun-bloom {
+      position: absolute;
+      top: -120px;
+      right: 10%;
+      width: 900px;
+      height: 900px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 155, 10, 0.15) 0%, rgba(251, 213, 152, 0.08) 50%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .f2-header-tag {
+      position: absolute;
+      top: 50px;
+      left: 100px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #57534E;
+    }
+
+    .f2-tag-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #B45309;
+    }
+
+    .f2-layout {
+      position: absolute;
+      top: 110px;
+      left: 100px;
+      right: 100px;
+      bottom: 80px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.95fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    /* Left Stage: Real Curriculum Dual-Page Spread Viewport */
+    .f2-book-stage {
+      position: relative;
+      height: 620px;
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 20px;
+      box-shadow: 0 25px 60px -10px rgba(28, 25, 23, 0.18);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .f2-book-browser-bar {
+      height: 40px;
+      background: #F9FAFB;
+      border-bottom: 1px solid #E5E7EB;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 8px;
+    }
+
+    .f2-window-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .f2-window-dot.r { background: #EF4444; }
+    .f2-window-dot.y { background: #F59E0B; }
+    .f2-window-dot.g { background: #10B981; }
+
+    .f2-book-url {
+      margin-left: 12px;
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 6px;
+      padding: 3px 12px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 11px;
+      color: #57534E;
+      width: 280px;
+    }
+
+    .f2-book-viewport {
+      position: relative;
+      flex: 1;
+      overflow: hidden;
+      background: #E5E5E5;
+    }
+
+    .f2-book-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    /* Hotspot on the real textbook word */
+    .f2-hotspot {
+      position: absolute;
+      top: 32%;
+      left: 28%;
+      padding: 4px 10px;
+      background: rgba(245, 158, 11, 0.35);
+      border: 2px solid #D97706;
+      border-radius: 6px;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
+      pointer-events: none;
+    }
+
+    .f2-hotspot-ripple {
+      position: absolute;
+      inset: -6px;
+      border-radius: 8px;
+      border: 2px solid #F59E0B;
+      opacity: 0.8;
+    }
+
+    /* Right Stage: AI Linguistic Analysis & Saved Word Card */
+    .f2-right-panel {
+      position: relative;
+      height: 620px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Card A: Linguistic Parsing Drawer */
+    .f2-parse-card {
+      position: absolute;
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 20px 50px rgba(28, 25, 23, 0.12);
+      transform-origin: center right;
+    }
+
+    .f2-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #F3F4F6;
+      padding-bottom: 12px;
+    }
+
+    .f2-card-label {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #B45309;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .f2-speed-badge {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 11px;
+      background: #FEF3C7;
+      color: #92400E;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .f2-lemma-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .f2-lemma-text {
+      font-family: 'Source Serif Pro', serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: #1C1917;
+      letter-spacing: -0.01em;
+    }
+
+    .f2-article-chip {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      background: #FEF3C7;
+      color: #92400E;
+      padding: 3px 10px;
+      border-radius: 9999px;
+    }
+
+    .f2-ipa-text {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 14px;
+      color: #57534E;
+      margin-bottom: 16px;
+    }
+
+    .f2-rule-box {
+      background: #F8FAFC;
+      border-left: 3px solid #3B82F6;
+      padding: 12px 16px;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 18px;
+      font-size: 14px;
+      color: #1E3A8A;
+      line-height: 1.45;
+    }
+
+    .f2-rule-title {
+      font-weight: 700;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      color: #2563EB;
+    }
+
+    .f2-example-box {
+      background: #F9FAFB;
+      border-left: 3px solid #D97706;
+      padding: 12px 16px;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 22px;
+      font-style: italic;
+      color: #374151;
+      font-size: 15px;
+    }
+
+    .f2-save-btn {
+      width: 100%;
+      background: #1C1917;
+      color: #FFFFFF;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 14px rgba(28, 25, 23, 0.2);
+    }
+
+    /* Card B: Success Synced Knowledge Bank Card */
+    .f2-synced-card {
+      position: absolute;
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid #10B981;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 24px 60px rgba(16, 185, 129, 0.15);
+      opacity: 0;
+      transform-origin: center right;
+    }
+
+    .f2-synced-banner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      color: #065F46;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .f2-thumb-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .f2-vocab-thumb {
+      width: 74px;
+      height: 74px;
+      border-radius: 14px;
+      border: 1px solid #E5E7EB;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .f2-srs-progress-block {
+      background: #F9FAFB;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .f2-srs-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+    .f2-srs-bar-track {
+      width: 100%;
+      height: 8px;
+      background: #E5E7EB;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .f2-srs-bar-fill {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #10B981, #059669);
+      border-radius: 9999px;
+    }
+
+    .f2-interval-meta {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 12px;
+      color: #57534E;
+    }
+
+    /* Oversized Cursor */
+    .f2-cursor {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      pointer-events: none;
+      z-index: 100;
+      filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.3));
+    }
+
+    .f2-bottom-banner {
+      position: absolute;
+      bottom: 45px;
+      left: 100px;
+      right: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #E5E7EB;
+      padding-top: 18px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 14px;
+      color: #57534E;
+    }
+  </style>
+
+  <div id="frame-02" class="clip f2-root" data-start="0" data-duration="17.580" data-width="1920" data-height="1080" data-composition-id="02-discover-capture">
+    <div class="f2-sun-bloom" data-layout-allow-overflow></div>
+
+    <div class="f2-header-tag" data-layout-allow-overlap>
+      <span class="f2-tag-dot"></span>
+      <span>Part 02 / The Capture Flow</span>
+    </div>
+
+    <div class="f2-layout">
+      <!-- Left Stage: Real Curriculum Viewport with Interactive Hotspot -->
+      <div class="f2-book-stage" id="f2-book-card">
+        <div class="f2-book-browser-bar">
+          <span class="f2-window-dot r"></span>
+          <span class="f2-window-dot y"></span>
+          <span class="f2-window-dot g"></span>
+          <span class="f2-book-url">languagelift.app/curriculum/de-a2-1/p7-8</span>
+        </div>
+        <div class="f2-book-viewport">
+          <img src="assets/screenshots/curriculum-dualpage-desktop.png" alt="Curriculum Dual Page" class="f2-book-img">
+          
+          <!-- Hotspot over the word -->
+          <div class="f2-hotspot" id="f2-hotspot">
+            <div class="f2-hotspot-ripple" id="f2-ripple"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Stage: Linguistic Parsing -> Saved Card -->
+      <div class="f2-right-panel" id="f2-right-panel">
+        <!-- Card 1: Linguistic AI Parser Drawer -->
+        <div class="f2-parse-card" id="f2-card-parse" data-layout-allow-overlap>
+          <div class="f2-card-header">
+            <span class="f2-card-label">● Linguistic Intelligence</span>
+            <span class="f2-speed-badge">⚡ 0.4s AI Parse</span>
+          </div>
+
+          <div class="f2-lemma-row">
+            <div class="f2-lemma-text">Familienrezept</div>
+            <span class="f2-article-chip">das · Noun</span>
+          </div>
+
+          <div class="f2-ipa-text">/faˈmiːli̯ən-ʁeˌtsɛpt/ · German A2 Lemma</div>
+
+          <div class="f2-rule-box">
+            <div class="f2-rule-title">Compound Noun Gender Rule</div>
+            German compound nouns inherit the gender of the final base word: <em>die Familie</em> + <strong>das Rezept</strong> → <strong>das Familienrezept</strong>.
+          </div>
+
+          <div class="f2-example-box">
+            "Das ist unser traditionelles <strong>Familienrezept</strong> aus der Bäckerei."
+          </div>
+
+          <button class="f2-save-btn" id="f2-btn-save">
+            <span>+</span>
+            <span>Add Word to Knowledge Bank</span>
+          </button>
+        </div>
+
+        <!-- Card 2: Knowledge Bank Initialized Success Card -->
+        <div class="f2-synced-card" id="f2-card-synced" data-layout-allow-overlap>
+          <div class="f2-synced-banner">
+            <span>✓</span>
+            <span>Added to Knowledge Bank · SRS Initialized</span>
+          </div>
+
+          <div class="f2-thumb-row">
+            <img src="assets/screenshots/vocab_v1.webp" alt="Visual Anchor" class="f2-vocab-thumb">
+            <div>
+              <div style="font-family: 'Source Serif Pro', serif; font-size: 32px; font-weight: 700; color: #1C1917;">das Familienrezept</div>
+              <div style="font-family: 'Source Code Pro', monospace; font-size: 13px; color: #57534E;">family recipe / traditional heirloom dish</div>
+            </div>
+          </div>
+
+          <div class="f2-srs-progress-block">
+            <div class="f2-srs-labels">
+              <span>Memory Strength</span>
+              <span style="font-weight: 700; color: #059669;">100% (Strong)</span>
+            </div>
+            <div class="f2-srs-bar-track">
+              <div class="f2-srs-bar-fill"></div>
+            </div>
+          </div>
+
+          <div class="f2-interval-meta">
+            <span>Initial Stability: 10h</span>
+            <span>Next Review: Tomorrow 9:00 AM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Oversized macOS Cursor SVG -->
+    <svg class="f2-cursor" id="f2-cursor" viewBox="0 0 32 32" fill="none" data-layout-allow-overflow>
+      <path d="M6 3L22 17L14 18L18 27L14 29L10 20L6 24V3Z" fill="#1C1917" stroke="#FFFFFF" stroke-width="2.5" stroke-linejoin="round"/>
+    </svg>
+
+    <div class="f2-bottom-banner" data-layout-allow-overlap>
+      <span>Curriculum-to-Memory Synchronous Pipeline</span>
+      <span>1-Click Zero-Friction Capture</span>
+    </div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    window.__timelines["02-discover-capture"] = gsap.timeline();
+    var tl02 = window.__timelines["02-discover-capture"];
+
+    // 0.2s - 0.9s: Stage elements glide in
+    tl02.fromTo("#f2-book-card", 
+      { opacity: 0, x: -60, scale: 0.96 }, 
+      { opacity: 1, x: 0, scale: 1.0, duration: 0.9, ease: "power3.out" }, 
+      0.2
+    );
+    tl02.fromTo("#f2-card-parse", 
+      { opacity: 0, x: 60, scale: 0.96 }, 
+      { opacity: 1, x: 0, scale: 1.0, duration: 0.9, ease: "power3.out" }, 
+      0.5
+    );
+
+    // 1.5s - 2.8s: Oversized cursor enters offscreen and navigates to the highlighted word
+    tl02.fromTo("#f2-cursor", 
+      { opacity: 0, x: 800, y: 750, scale: 1.2 }, 
+      { opacity: 1, x: 420, y: 390, scale: 1.0, duration: 1.3, ease: "power2.out" }, 
+      1.5
+    );
+
+    // 2.9s: Cursor click tap on word
+    tl02.to("#f2-cursor", { scale: 0.85, duration: 0.12, yoyo: true, repeat: 1, ease: "power2.inOut" }, 2.9);
+    tl02.to("#f2-ripple", { scale: 1.8, opacity: 0, duration: 0.6, ease: "power1.out" }, 2.95);
+
+    // 4.0s - 7.0s: AI linguistic rule explanation card highlights
+    tl02.to("#f2-card-parse", { 
+      borderColor: "#F59E0B", 
+      boxShadow: "0 24px 60px rgba(245, 158, 11, 0.18)", 
+      duration: 0.6 
+    }, 4.2);
+
+    // 7.8s - 9.2s: Cursor travels to the "+ Add Word to Knowledge Bank" button
+    tl02.to("#f2-cursor", { x: 1350, y: 640, duration: 1.2, ease: "power2.inOut" }, 7.8);
+    // 9.2s: Cursor clicks the Add Word button
+    tl02.to("#f2-cursor", { scale: 0.85, duration: 0.12, yoyo: true, repeat: 1, ease: "power2.inOut" }, 9.2);
+    tl02.to("#f2-btn-save", { scale: 0.96, duration: 0.1, yoyo: true, repeat: 1 }, 9.2);
+
+    // 9.4s - 10.2s: AI Parse Card morphs into the Synced Knowledge Bank Card!
+    tl02.to("#f2-card-parse", { opacity: 0, scale: 0.95, duration: 0.4, ease: "power2.in" }, 9.4);
+    tl02.fromTo("#f2-card-synced", 
+      { opacity: 0, scale: 0.95, y: 20 }, 
+      { opacity: 1, scale: 1.0, y: 0, duration: 0.6, ease: "back.out(1.4)" }, 
+      9.6
+    );
+
+    // Cursor exits stage gracefully
+    tl02.to("#f2-cursor", { opacity: 0, x: 1550, y: 720, duration: 0.8, ease: "power2.in" }, 10.5);
+
+    // Camera push forward across the scene
+    tl02.to("#f2-book-card", { scale: 1.02, y: -4, duration: 16, ease: "power1.out" }, 1.0);
+    tl02.to("#f2-right-panel", { scale: 1.02, y: -4, duration: 16, ease: "power1.out" }, 1.0);
+  </script>
+</template>

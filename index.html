@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #000;
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #F3F3F2;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="72.333"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- Beat 01: The Forgetting Trap -->
+      <div
+        id="el-01-forgetting-trap"
+        class="scene"
+        data-composition-id="01-forgetting-trap"
+        data-composition-src="compositions/frames/01-forgetting-trap.html"
+        data-start="0"
+        data-duration="12.177"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-01-forgetting-trap-voice"
+        src="assets/voice/01.wav"
+        data-start="0"
+        data-duration="11.677"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <!-- Beat 02: Discover & Capture -->
+      <div
+        id="el-02-discover-capture"
+        class="scene"
+        data-composition-id="02-discover-capture"
+        data-composition-src="compositions/frames/02-discover-capture.html"
+        data-start="11.677"
+        data-duration="17.580"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-02-discover-capture-voice"
+        src="assets/voice/02.wav"
+        data-start="11.677"
+        data-duration="16.980"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <!-- Beat 03: Your Living Memory -->
+      <div
+        id="el-03-living-memory"
+        class="scene"
+        data-composition-id="03-living-memory"
+        data-composition-src="compositions/frames/03-living-memory.html"
+        data-start="28.657"
+        data-duration="16.800"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-03-living-memory-voice"
+        src="assets/voice/03.wav"
+        data-start="28.657"
+        data-duration="16.300"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <!-- Beat 04: Practice Everywhere -->
+      <div
+        id="el-04-practice-everywhere"
+        class="scene"
+        data-composition-id="04-practice-everywhere"
+        data-composition-src="compositions/frames/04-practice-everywhere.html"
+        data-start="44.957"
+        data-duration="18.337"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-04-practice-everywhere-voice"
+        src="assets/voice/04.wav"
+        data-start="44.957"
+        data-duration="17.737"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <!-- Beat 05: The Result / CTA -->
+      <div
+        id="el-05-mastery-cta"
+        class="scene"
+        data-composition-id="05-mastery-cta"
+        data-composition-src="compositions/frames/05-mastery-cta.html"
+        data-start="62.694"
+        data-duration="9.639"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-05-mastery-cta-voice"
+        src="assets/voice/05.wav"
+        data-start="62.694"
+        data-duration="9.639"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <!-- BGM Soundtrack at 0.07 volume -->
+      <audio
+        id="el-bgm"
+        src="assets/bgm/soundtrack.mp3"
+        data-start="0"
+        data-duration="72.333"
+        data-track-index="11"
+        data-volume="0.07"
+      ></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+      (function () {
+        var tl = window.__timelines["main"];
+
+        // 11.677s: Scene 1 -> Scene 2 crossfade
+        tl.to("#el-01-forgetting-trap", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 11.677);
+        tl.fromTo("#el-02-discover-capture", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 11.677);
+
+        // 28.657s: Scene 2 -> Scene 3 rack-focus blur zoom
+        tl.to("#el-02-discover-capture", { filter: "blur(10px)", scale: 1.03, opacity: 0, duration: 0.6, ease: "power2.inOut" }, 28.657);
+        tl.fromTo("#el-03-living-memory", { filter: "blur(10px)", scale: 0.97, opacity: 0 }, { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.6, ease: "power2.inOut" }, 28.657);
+
+        // 44.957s: Scene 3 -> Scene 4 crossfade
+        tl.to("#el-03-living-memory", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 44.957);
+        tl.fromTo("#el-04-practice-everywhere", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 44.957);
+
+        // 62.694s: Scene 4 -> Scene 5 rack-focus blur zoom
+        tl.to("#el-04-practice-everywhere", { filter: "blur(10px)", scale: 1.03, opacity: 0, duration: 0.6, ease: "power2.inOut" }, 62.694);
+        tl.fromTo("#el-05-mastery-cta", { filter: "blur(10px)", scale: 0.97, opacity: 0 }, { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.6, ease: "power2.inOut" }, 62.694);
+
+        // Full-span anchor to guarantee main timeline length
+        tl.to({}, { duration: 72.333 }, 0);
+      })();
+    </script>
+  </body>
+</html>

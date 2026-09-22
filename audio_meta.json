@@ -1,0 +1,41 @@
+{
+  "voiceModel": "Slax (c5f56a6cc2ec4fa8920cb4c5889a3fb7)",
+  "provider": "Fish Audio Free (s2.1-pro-free)",
+  "scenes": {
+    "01": {
+      "name": "01-forgetting-trap",
+      "wavFile": "assets/voice/01.wav",
+      "mp3File": "assets/voice/01.mp3",
+      "duration": 11.676735,
+      "text": "You're learning hundreds of German words every week. But here's the truth: without a system, eighty percent of them vanish within days. What if your vocabulary could actually stick?"
+    },
+    "02": {
+      "name": "02-discover-capture",
+      "wavFile": "assets/voice/02.wav",
+      "mp3File": "assets/voice/02.mp3",
+      "duration": 16.979592,
+      "text": "Every word you encounter in your curriculum is one click away from your Knowledge Bank. Select any phrase, and our linguistic AI instantly parses it: article, IPA, compound noun rules, then saves it with full context for spaced repetition."
+    },
+    "03": {
+      "name": "03-living-memory",
+      "wavFile": "assets/voice/03.wav",
+      "mp3File": "assets/voice/03.mp3",
+      "duration": 16.300408,
+      "text": "Your Knowledge Bank isn't a flashcard list. It's a living memory system. Every word carries a real-time memory strength score, powered by the FSRS algorithm. Filter by CEFR level, strength, or register, and see exactly which words need attention."
+    },
+    "04": {
+      "name": "04-practice-everywhere",
+      "wavFile": "assets/voice/04.wav",
+      "mp3File": "assets/voice/04.mp3",
+      "duration": 17.737143,
+      "text": "Words from your bank flow into every practice mode. In the Writing Lab, they appear as target vocabulary you must weave into real sentences. In the Speaking Lab, saying them correctly in conversation triggers a closed-loop memory boost, pushing fading words back to mastered."
+    },
+    "05": {
+      "name": "05-mastery-cta",
+      "wavFile": "assets/voice/05.wav",
+      "mp3File": "assets/voice/05.mp3",
+      "duration": 9.639184,
+      "text": "Ninety-four percent active retention. Zero wasted effort. Your vocabulary, permanently yours. Start building your Knowledge Bank today."
+    }
+  }
+}
